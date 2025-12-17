@@ -4,22 +4,11 @@
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC select current_timestamp()
-
-# COMMAND ----------
-
-#dbutils.notebook.exit(0)
-
-# COMMAND ----------
-
 dbutils.widgets.text("table_name", "cities")
+table_name = dbutils.widgets.get("table_name")
+print(f"parameter passed is {table_name}")
+spark.sql(f"select * from {table_name}").show(2)
 
 # COMMAND ----------
 
-text_box_value=dbutils.widgets.get("table_name")
-print(text_box_value)
-
-# COMMAND ----------
-
-spark.read.table(text_box_value).display()
+dbutils.notebook.exit("success")

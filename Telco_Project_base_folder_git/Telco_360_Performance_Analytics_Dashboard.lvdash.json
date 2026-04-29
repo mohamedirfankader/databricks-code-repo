@@ -1,0 +1,283 @@
+{
+  "datasets": [
+    {
+      "name": "75d5cf0f",
+      "displayName": "fact_realtime_customer_aggr",
+      "config": {
+        "version": "1.1",
+        "source": "wd36_workspace1.telecom_gold.fact_realtime_customer_aggr",
+        "dimensions": [
+          {
+            "name": "call_date",
+            "expr": "source.call_date",
+            "displayName": "Call Date"
+          },
+          {
+            "name": "caller_id",
+            "expr": "source.caller_id",
+            "displayName": "Caller Id"
+          },
+          {
+            "name": "total_calls",
+            "expr": "source.total_calls",
+            "displayName": "Total Calls"
+          },
+          {
+            "name": "total_duration",
+            "expr": "source.total_duration",
+            "displayName": "Total Duration"
+          },
+          {
+            "name": "total_revenue",
+            "expr": "source.total_revenue",
+            "displayName": "Total Revenue"
+          },
+          {
+            "name": "avg_duration",
+            "expr": "source.avg_duration",
+            "displayName": "Avg Duration"
+          }
+        ],
+        "measures": [
+          {
+            "name": "count",
+            "expr": "COUNT(*)",
+            "comment": "Represents the total number of rows in the dataset. Use this measure to count all",
+            "displayName": "Count"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "0c4b2415",
+      "displayName": "aggr_metrics",
+      "layout": [
+        {
+          "widget": {
+            "name": "caller-count",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "75d5cf0f",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Caller Count"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "count(*)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 5,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "4cf6126e",
+            "multilineTextboxSpec": {
+              "lines": [
+                "<span style=\"text-align:center;display:block\"><span style=\"font-size: 36px;line-height: 1.5;color: #AB4057;text-decoration: underline;\">**Telco 360 Call Metrics Analytics**</span></span>"
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "7af4cb26",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "75d5cf0f",
+                  "fields": [
+                    {
+                      "name": "median(avg_duration)",
+                      "expression": "MEDIAN(`avg_duration`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Median (Average) Duration"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "median(avg_duration)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 2,
+            "width": 7,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "call-metrics",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "75d5cf0f",
+                  "fields": [
+                    {
+                      "name": "daily(call_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `call_date`)"
+                    },
+                    {
+                      "name": "countdistinct(caller_id)",
+                      "expression": "COUNT(DISTINCT `caller_id`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Call Metrics"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(call_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "countdistinct(caller_id)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "revenue-360",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "75d5cf0f",
+                  "fields": [
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    },
+                    {
+                      "name": "sum(avg_duration)",
+                      "expression": "SUM(`avg_duration`)"
+                    },
+                    {
+                      "name": "sum(total_calls)",
+                      "expression": "SUM(`total_calls`)"
+                    },
+                    {
+                      "name": "sum(total_duration)",
+                      "expression": "SUM(`total_duration`)"
+                    },
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Revenue 360"
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "count(*)"
+                  },
+                  {
+                    "fieldName": "sum(avg_duration)"
+                  },
+                  {
+                    "fieldName": "sum(total_calls)"
+                  },
+                  {
+                    "fieldName": "sum(total_duration)"
+                  },
+                  {
+                    "fieldName": "sum(total_revenue)"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

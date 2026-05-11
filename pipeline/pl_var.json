@@ -1,0 +1,57 @@
+{
+	"name": "pl_var",
+	"properties": {
+		"activities": [
+			{
+				"name": "var1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": "hello"
+				}
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "var1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-40.eastus.logic.azure.com:443/workflows/e956cc0a77ae4e089705bd02d4ff8db0/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=nxbvP-yYjO07Dtj8oasvxWgddr_ZApxe7Hi8jiqHt6U",
+					"body": {
+						"value": "{\n     \"pipelinename\" : \"@{pipeline().Pipeline}\",\n     \"datafactoryname\" : \"@{pipeline().DataFactory}\"\n     \"runid\" : \"@{pipeline().RunId}\"\n     \"msg\" : \"@{variables('var1')}\"\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"var1": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-04-29T02:47:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

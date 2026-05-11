@@ -1,0 +1,15 @@
+{
+	"name": "inceptez-adf-test",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "13ab3469-0086-41de-bccb-b5c5873f8092",
+		"tenantId": "089cf941-fd24-44c5-8a92-985784dc42d6"
+	}
+}

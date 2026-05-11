@@ -1,0 +1,19 @@
+{
+	"name": "pl_copy_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait70",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-04-29T02:47:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
